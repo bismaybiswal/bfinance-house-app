@@ -1,7 +1,7 @@
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
   <div class="container-fluid">
     <div class="header-body">
-      <p *ngIf="!payload">Please wait...</p>
+      <p style="color: white; font-weight:bolder" *ngIf="!payload">Please wait...</p>
       <div *ngIf="payload" class="row mt-5">
         <div class="col-xl-12">
           <div class="card shadow">
@@ -79,7 +79,6 @@
   </div>
 </div>
 <div class="container-fluid mt--7">
-  <p *ngIf="!payload">Please wait...</p>
   <div *ngIf="payload" class="row mt-5">
     <div class="col-xl-12 mb-5 mb-xl-0">
       <div class="card shadow">
