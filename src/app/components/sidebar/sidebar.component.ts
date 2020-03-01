@@ -35,4 +35,8 @@ export class SidebarComponent implements OnInit {
       this.isCollapsed = true;
    });
   }
+  logout() {
+    window.sessionStorage.removeItem('token');
+    window.location.reload();
+  }
 }

@@ -11,8 +11,5 @@ export class AdminLayoutComponent implements OnInit {
 
   ngOnInit() {
   }
-  logout() {
-    window.sessionStorage.removeItem('token');
-    window.location.reload();
-  }
+  
 }
