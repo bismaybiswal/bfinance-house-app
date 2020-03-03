@@ -81,6 +81,7 @@ export class ExpenseDetailsComponent implements OnInit {
       eventDetails = data;
       this.eventService.getTransactionsByEventId(eventId).subscribe(data => {
         transactionDetails = data;
+        transactionDetails = this.formatTransactionDate(transactionDetails);
         let supplementaryData = this.formSupplementaryData(eventDetails, transactionDetails);
         this.payload = {
           eventDetails: eventDetails,
@@ -94,6 +95,22 @@ export class ExpenseDetailsComponent implements OnInit {
     }, error => {
       console.log(error);
     });
+  }
+  formatTransactionDate(transactionDetails: any): any {
+    const MONTH = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    if (transactionDetails.length > 0) {
+      transactionDetails.forEach(t => {
+        //formating
+        let dateStr = t.transactionDate;
+        let day = dateStr.split("-")[0];
+        let month = MONTH[parseInt(dateStr.split("-")[1]) - 0];
+        let year = dateStr.split("-")[2];
+        let formattedDate = day +" "+month+" "+year;
+        t['transactionDate'] = formattedDate;
+      })
+    }
+    return transactionDetails;
+
   }
 
   formSupplementaryData(eventDetails, transactionDetails) {
