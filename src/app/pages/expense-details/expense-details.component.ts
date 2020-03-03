@@ -167,7 +167,7 @@ export class ExpenseDetailsComponent implements OnInit {
         }
       });
       availabaleBalance = totalBudget - totalExpenses;
-      if (availabaleBalance > 25000) {
+      if (availabaleBalance > 10000) {
         paymentRequired = false;
       }
       expensePercentage = Math.round((totalExpenses / parseInt(eventDetails.estimate)) * 100);
