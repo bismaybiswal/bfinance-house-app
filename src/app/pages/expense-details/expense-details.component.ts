@@ -19,6 +19,7 @@ export class ExpenseDetailsComponent implements OnInit {
   expenseType: any = 'EXPENSE';
   expenseTypeState = 'primary';
   categoryState = true;
+  showTransactions = 5;
 
   constructor(private toastr: ToastrService, private formBuilder: FormBuilder, private route: ActivatedRoute, private modalService: NgbModal, private eventService: EventsService) { }
 
@@ -26,6 +27,17 @@ export class ExpenseDetailsComponent implements OnInit {
     this.eventId = this.route.snapshot.params.eventId;
     this.getEventDetails(this.eventId);
     this.createForm();
+    this.expenseType = "EXPENSE";
+    this.categoryState = true;
+    this.expenseTypeState = "primary";
+  }
+
+  showMoreTransactions() {
+    this.showTransactions += 5 
+  }
+
+  showLessTransactions() {
+    this.showTransactions = 5
   }
 
   createForm() {

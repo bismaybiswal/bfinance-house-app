@@ -102,7 +102,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let transaction of payload.transactions">
+              <tr *ngFor="let transaction of payload.transactions | slice:0:showTransactions">
                 <th scope="row">
                   {{transaction.transactionDate}}
                 </th>
@@ -126,8 +126,11 @@
               </tr>
             </tbody>
           </table>
-          <div class="col text-center" style="margin-bottom: 10px; margin-top: 10px;">
-            <a href="#!" class="btn btn-sm btn-primary">See more</a>
+          <div *ngIf="payload.transactions.length > 0 && showTransactions < payload.transactions.length" (click)="showMoreTransactions()" class="col text-center" style="margin-bottom: 10px; margin-top: 10px;">
+            <button href="#" class="btn btn-sm btn-primary">See more</button>
+          </div>
+          <div *ngIf="payload.transactions.length > 5 && showTransactions > payload.transactions.length" (click)="showLessTransactions()" class="col text-center" style="margin-bottom: 10px; margin-top: 10px;">
+            <button class="btn btn-sm btn-primary">See less</button>
           </div>
         </div>
         <h3 style="margin: 10px;" *ngIf="payload.transactions.length == 0">😐 <i>No Transactions yet </i></h3>
