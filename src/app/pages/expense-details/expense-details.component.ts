@@ -103,7 +103,7 @@ export class ExpenseDetailsComponent implements OnInit {
         //formating
         let dateStr = t.transactionDate;
         let day = dateStr.split("-")[0];
-        let month = MONTH[parseInt(dateStr.split("-")[1]) - 0];
+        let month = MONTH[parseInt(dateStr.split("-")[1]) - 1];
         let year = dateStr.split("-")[2];
         let formattedDate = day +" "+month+" "+year;
         t['transactionDate'] = formattedDate;
