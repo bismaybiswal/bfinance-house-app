@@ -118,7 +118,7 @@
 
                 </td>
                 <td>
-
+                  {{transaction.category}}
                 </td>
                 <td>
                   {{transaction.desc}}
@@ -173,17 +173,11 @@
       <div *ngIf="categoryState" class="form-group">
         <label class="form-control-label" for="input-username">Category</label>
         <select formControlName="category" class="form-control form-control-alternative">
-          <option value="CEMENT">CEMENT</option>
-          <option value="ROD">ROD</option>
-          <option value="METAL">METAL</option>
-          <option value="BRICKS">BRICKS</option>
-          <option value="WORKER">WORKER</option>
-          <option value="SAND">SAND</option>
-          <option value="OTHERS">OTHERS</option>
+          <option *ngFor="let category of categoryList" [value]="category.name">{{category.name}}</option>
         </select>
       </div>
       <div class="form-group">
-        <label class="form-control-label" for="input-username">Desc</label>
+        <label class="form-control-label" for="input-username">Description</label>
         <input formControlName="desc" type="text" id="input-username" class="form-control form-control-alternative"
           placeholder="Description">
       </div>

@@ -8,11 +8,11 @@
     <!-- Brand -->
     <a class="navbar-brand pt-0" routerLinkActive="active" [routerLink]="['/dashboard']">
       <!-- <img src="./assets/img/brand/red.png" class="navbar-brand-img" alt="..."> -->
-      <h2>bFinance</h2>
+      <h2 style="font-weight: bolder;">bFinance House</h2>
     </a>
     <!-- User -->
     <ul class="nav align-items-center d-md-none">
-      <li class="nav-item" ngbDropdown placement="bottom-right">
+      <!-- <li class="nav-item" ngbDropdown placement="bottom-right">
         <a class="nav-link nav-link-icon" role="button" ngbDropdownToggle>
           <i class="ni ni-bell-55"></i>
         </a>
@@ -22,7 +22,7 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="javascript:void(0)">Something else here</a>
         </div>
-      </li>
+      </li> -->
       <li class="nav-item" ngbDropdown placement="bottom-right">
         <a class="nav-link" role="button" ngbDropdownToggle>
           <div class="media align-items-center">
@@ -35,26 +35,10 @@
           <div class=" dropdown-header noti-title">
             <h6 class="text-overflow m-0">Welcome!</h6>
           </div>
-          <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
-            <i class="ni ni-single-02"></i>
-            <span>My profile</span>
-          </a>
-          <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
-            <i class="ni ni-settings-gear-65"></i>
-            <span>Settings</span>
-          </a>
-          <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
-            <i class="ni ni-calendar-grid-58"></i>
-            <span>Activity</span>
-          </a>
-          <a routerLinkActive="active" [routerLink]="['/user-profile']" class="dropdown-item">
-            <i class="ni ni-support-16"></i>
-            <span>Support</span>
-          </a>
           <div class="dropdown-divider"></div>
-          <a href="#!" class="dropdown-item">
+          <a href="#" (click)="logout()" class="dropdown-item">
             <i class="ni ni-user-run"></i>
-            <span (click)="logout">Logout</span>
+            <span >Logout</span>
           </a>
         </div>
       </li>
@@ -66,7 +50,8 @@
         <div class="row">
           <div class="col-6 collapse-brand">
             <a  routerLinkActive="active" [routerLink]="['/dashboard']">
-              <img src="./assets/img/brand/blue.png">
+              <!-- <img src="./assets/img/brand/blue.png"> -->
+              <h2 style="font-weight: bolder;">bFinance House</h2>
             </a>
           </div>
           <div class="col-6 collapse-close">
@@ -104,7 +89,7 @@
       <!-- Navigation -->
       <ul class="navbar-nav mb-md-3">
         <li class="nav-item">
-          <a class="nav-link" href="#">
+          <a class="nav-link" (click)="logout()" href="#">
             <i class="ni ni-user-run"></i> Logout
           </a>
         </li>

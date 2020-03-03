@@ -21,6 +21,24 @@ export class ExpenseDetailsComponent implements OnInit {
   categoryState = true;
   showTransactions = 5;
 
+  categoryList = [{
+    name: "CEMENT"
+  }, {
+    name: "ROD"
+  }, {
+    name: "METAL"
+  }, {
+    name: "BRICKS"
+  }, {
+    name: "WORKER"
+  }, {
+    name: "SAND"
+  }, {
+    name: "OTHERS"
+  }
+  ];
+
+
   constructor(private toastr: ToastrService, private formBuilder: FormBuilder, private route: ActivatedRoute, private modalService: NgbModal, private eventService: EventsService) { }
 
   ngOnInit() {
@@ -32,8 +50,9 @@ export class ExpenseDetailsComponent implements OnInit {
     this.expenseTypeState = "primary";
   }
 
+
   showMoreTransactions() {
-    this.showTransactions += 5 
+    this.showTransactions += 5
   }
 
   showLessTransactions() {
@@ -45,7 +64,7 @@ export class ExpenseDetailsComponent implements OnInit {
       amount: ['', Validators.compose([Validators.required])],
       desc: ['', Validators.compose([Validators.required])],
       transactionDate: ['', Validators.compose([Validators.required])],
-      category: ['MATERIALS']
+      category: ['', Validators.compose([Validators.required])]
     });
   }
 
@@ -117,7 +136,7 @@ export class ExpenseDetailsComponent implements OnInit {
         let day = dateStr.split("-")[0];
         let month = MONTH[parseInt(dateStr.split("-")[1]) - 1];
         let year = dateStr.split("-")[2];
-        let formattedDate = day +" "+month+" "+year;
+        let formattedDate = day + " " + month + " " + year;
         t['transactionDate'] = formattedDate;
       })
     }
@@ -190,8 +209,9 @@ export class ExpenseDetailsComponent implements OnInit {
 
   deleteEvent() {
     this.eventService.deleteEvent(this.eventId).subscribe(data => {
-      this.toastr.success("Event deleted")
+       this.toastr.success("Event deleted")
     }, error => {
+      console.log(error);
       alert("something went wrong")
     })
   }
