@@ -64,7 +64,7 @@ export class ExpenseDetailsComponent implements OnInit {
       amount: ['', Validators.compose([Validators.required])],
       desc: ['', Validators.compose([Validators.required])],
       transactionDate: ['', Validators.compose([Validators.required])],
-      category: ['', Validators.compose([Validators.required])]
+      category: ['OTHERS']
     });
   }
 
