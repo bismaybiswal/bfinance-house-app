@@ -94,15 +94,18 @@
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
+                <th scope="col">#</th>
                 <th scope="col">Date</th>
                 <th scope="col">Amount</th>
-                <th scope="col">Type</th>
-                <th scope="col">Category</th>
                 <th scope="col">Desc</th>
-              </tr>
+                <th scope="col">Category</th>
+               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let transaction of payload.transactions | slice:0:showTransactions">
+                <td>
+                  <button (click)="deleteTransaction(transaction.id)" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                </td>
                 <th scope="row">
                   {{transaction.transactionDate}}
                 </th>
@@ -110,18 +113,12 @@
                   <i *ngIf="transaction.type == 'EXPENSE'" class="fas fa-arrow-down text-danger mr-3"></i>
                   <i *ngIf="transaction.type == 'BUDGET'" class="fas fa-arrow-up text-success mr-3"></i>
                   {{transaction.amount | currency: 'INR'}}
-
                 </th>
                 <td>
-                  <span *ngIf="transaction.type == 'EXPENSE'" class="btn-sm btn-success">EXPENSE</span>
-                  <span *ngIf="transaction.type == 'BUDGET'" class="btn-sm btn-info">BUDGET</span>
-
+                  {{transaction.desc}}
                 </td>
                 <td>
                   {{transaction.category}}
-                </td>
-                <td>
-                  {{transaction.desc}}
                 </td>
               </tr>
             </tbody>

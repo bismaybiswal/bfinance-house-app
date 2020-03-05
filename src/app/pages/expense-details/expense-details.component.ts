@@ -69,10 +69,11 @@ export class ExpenseDetailsComponent implements OnInit {
   }
 
   createTransaction() {
-    if (this.createTransactionForm.invalid) {
+    if (this.expenseType != 'BUDGET' && this.createTransactionForm.invalid) {
       this.toastr.error("Please fill the information correctly")
       return;
     }
+
     let payload = {
       eventId: this.eventId,
       type: this.expenseType,
@@ -81,6 +82,11 @@ export class ExpenseDetailsComponent implements OnInit {
       transactionDate: this.formatDate(this.createTransactionForm.controls.transactionDate.value)
     }
     if (this.expenseType === 'BUDGET') {
+      alert("working")
+      if (payload.desc === "" || payload.amount === '' || payload.transactionDate === '') {
+        this.toastr.error("Please fill the information correctly");
+        return;
+      }
       payload['category'] = '';
     } else {
       payload['category'] = this.createTransactionForm.controls.category.value;
@@ -99,10 +105,15 @@ export class ExpenseDetailsComponent implements OnInit {
   }
 
   formatDate(dateObject) {
-    let day = dateObject.day;
-    let month = dateObject.month;
-    let year = dateObject.year;
-    return day + "-" + month + "-" + year;
+    if (dateObject != undefined && dateObject != '' && dateObject != null) {
+      let day = dateObject.day;
+      let month = dateObject.month;
+      let year = dateObject.year;
+      return day + "-" + month + "-" + year;
+    } else {
+      return "";
+    }
+
   }
 
   getEventDetails(eventId) {
@@ -208,11 +219,25 @@ export class ExpenseDetailsComponent implements OnInit {
   }
 
   deleteEvent() {
-    this.eventService.deleteEvent(this.eventId).subscribe(data => {
-       this.toastr.success("Event deleted")
-    }, error => {
-      console.log(error);
-      alert("something went wrong")
-    })
+    if (confirm("Are you sure to delete this event?")) {
+      this.eventService.deleteEvent(this.eventId).subscribe(data => {
+        this.toastr.success("Event deleted")
+      }, error => {
+        console.log(error);
+        this.toastr.error("Something went wrong")
+      });
+    }
+  }
+
+  deleteTransaction(transactionId) {
+    if (confirm("Are you sure to delete this transaction?")) {
+      this.eventService.deleteTransaction(transactionId).subscribe(data => {
+        this.getEventDetails(this.eventId);
+        this.toastr.success("Transaction deleted")
+      }, error => {
+        console.log(error);
+        this.toastr.error("Something went wrong")
+      });
+    }
   }
 }

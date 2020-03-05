@@ -7,8 +7,8 @@ import { Observable } from "rxjs";
     providedIn: 'root'
 })
 export class AuthService {
-    appUrl = 'https://bfinance-house-service.herokuapp.com/api/v1';
-    //appUrl: string = 'http://localhost:3000/api/v1';
+    //appUrl = 'https://bfinance-house-service.herokuapp.com/api/v1';
+    appUrl: string = 'http://localhost:3000/api/v1';
     loginUrl: string = this.appUrl + '/auth/login';
     verifyTokenUrl: string = this.appUrl + '/auth/verifytoken';
   
