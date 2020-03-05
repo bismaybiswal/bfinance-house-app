@@ -6,8 +6,8 @@ import { Observable } from "rxjs";
     providedIn: 'root'
 })
 export class EventsService {
-    //appUrl = 'https://bfinance-house-service.herokuapp.com/api/v1';
-    appUrl: string = 'http://localhost:3000/api/v1';
+    appUrl = 'https://bfinance-house-service.herokuapp.com/api/v1';
+    //appUrl: string = 'http://localhost:3000/api/v1';
     eventUrl: string = this.appUrl + '/event';
     transactionurl = this.appUrl + '/transactions'
 
