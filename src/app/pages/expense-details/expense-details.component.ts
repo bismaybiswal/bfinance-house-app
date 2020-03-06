@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { EventsService } from 'src/app/services/events.service';
@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ExpenseDetailsComponent implements OnInit {
 
   createTransactionForm: FormGroup;
+  editEventForm: FormGroup;
   payload: any;
   eventId: any;
   expenseType: any = 'EXPENSE';
@@ -39,7 +40,7 @@ export class ExpenseDetailsComponent implements OnInit {
   ];
 
 
-  constructor(private toastr: ToastrService, private formBuilder: FormBuilder, private route: ActivatedRoute, private modalService: NgbModal, private eventService: EventsService) { }
+  constructor(private router: Router,private toastr: ToastrService, private formBuilder: FormBuilder, private route: ActivatedRoute, private modalService: NgbModal, private eventService: EventsService) { }
 
   ngOnInit() {
     this.eventId = this.route.snapshot.params.eventId;
@@ -48,6 +49,7 @@ export class ExpenseDetailsComponent implements OnInit {
     this.expenseType = "EXPENSE";
     this.categoryState = true;
     this.expenseTypeState = "primary";
+    this.showEditEventForm();
   }
 
 
@@ -59,6 +61,14 @@ export class ExpenseDetailsComponent implements OnInit {
     this.showTransactions = 5
   }
 
+  showEditEventForm() {
+    this.editEventForm = this.formBuilder.group({
+      estimate: ['', Validators.compose([Validators.required])],
+      name: ['', Validators.compose([Validators.required])]
+    });
+  }
+
+
   createForm() {
     this.createTransactionForm = this.formBuilder.group({
       amount: ['', Validators.compose([Validators.required])],
@@ -66,6 +76,27 @@ export class ExpenseDetailsComponent implements OnInit {
       transactionDate: ['', Validators.compose([Validators.required])],
       category: ['OTHERS']
     });
+  }
+
+  updateEvent(){
+    if(this.editEventForm.invalid){
+      this.toastr.error("Please fill the information correctly");
+      return;
+    }
+    let payload = {
+      name: this.editEventForm.controls.name.value,
+      estimate:  this.editEventForm.controls.estimate.value
+    }
+
+    this.eventService.updateEvent(this.eventId, payload).subscribe(data => {
+      this.getEventDetails(this.eventId);
+      this.toastr.success("Event updated");
+      this.editEventForm.reset();
+      this.modalService.dismissAll();
+    }, err =>{
+      console.log(err);
+      this.toastr.error("something went wrong")
+    })
   }
 
   createTransaction() {
@@ -116,6 +147,11 @@ export class ExpenseDetailsComponent implements OnInit {
 
   }
 
+  fillEditEventForm(){
+    this.editEventForm.controls.name.setValue(this.payload.eventDetails.name);
+    this.editEventForm.controls.estimate.setValue(this.payload.eventDetails.estimate);
+  }
+
   getEventDetails(eventId) {
     let eventDetails;
     let transactionDetails;
@@ -138,6 +174,7 @@ export class ExpenseDetailsComponent implements OnInit {
       console.log(error);
     });
   }
+
   formatTransactionDate(transactionDetails: any): any {
     const MONTH = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     if (transactionDetails.length > 0) {
@@ -205,6 +242,16 @@ export class ExpenseDetailsComponent implements OnInit {
     });
   }
 
+  openEditEventForm(content) {
+    this.fillEditEventForm();
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      //   this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
+  }
+
   changeExpenseType(event) {
     let flag = event.target.checked;
     if (flag) {
@@ -222,6 +269,7 @@ export class ExpenseDetailsComponent implements OnInit {
     if (confirm("Are you sure to delete this event?")) {
       this.eventService.deleteEvent(this.eventId).subscribe(data => {
         this.toastr.success("Event deleted")
+        this.router.navigate(['dashboard']);
       }, error => {
         console.log(error);
         this.toastr.error("Something went wrong")

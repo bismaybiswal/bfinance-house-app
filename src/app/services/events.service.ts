@@ -13,6 +13,9 @@ export class EventsService {
 
     constructor(private http: HttpClient) { }
 
+    updateEvent(eventId, payload){
+        return this.http.put(this.eventUrl+"/"+eventId, payload);
+    }
     deleteTransaction(transactionId) {
         return this.http.delete(this.transactionurl+"/"+transactionId);
     }
