@@ -154,16 +154,16 @@ export class ExpenseDetailsComponent implements OnInit {
 
   getEventDetails(eventId) {
     let eventDetails;
-    let transactionDetails;
+    let transactionDetails = [];
     this.eventService.getEventDetails(eventId).subscribe(data => {
       eventDetails = data;
       this.eventService.getTransactionsByEventId(eventId).subscribe(data => {
-        transactionDetails = data.reverse();
+        transactionDetails = data;
         transactionDetails = this.formatTransactionDate(transactionDetails);
         let supplementaryData = this.formSupplementaryData(eventDetails, transactionDetails);
         this.payload = {
           eventDetails: eventDetails,
-          transactions: transactionDetails,
+          transactions: transactionDetails.reverse(),
           supplementaryData: supplementaryData
         };
         console.log(this.payload)
