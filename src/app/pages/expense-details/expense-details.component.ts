@@ -154,7 +154,7 @@ export class ExpenseDetailsComponent implements OnInit {
 
   getEventDetails(eventId) {
     let eventDetails;
-    let transactionDetails = [];
+    let transactionDetails : any[] = [];
     this.eventService.getEventDetails(eventId).subscribe(data => {
       eventDetails = data;
       this.eventService.getTransactionsByEventId(eventId).subscribe(data => {
