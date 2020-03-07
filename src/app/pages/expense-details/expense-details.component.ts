@@ -158,7 +158,7 @@ export class ExpenseDetailsComponent implements OnInit {
     this.eventService.getEventDetails(eventId).subscribe(data => {
       eventDetails = data;
       this.eventService.getTransactionsByEventId(eventId).subscribe(data => {
-        transactionDetails = data;
+        transactionDetails = data.reverse();
         transactionDetails = this.formatTransactionDate(transactionDetails);
         let supplementaryData = this.formSupplementaryData(eventDetails, transactionDetails);
         this.payload = {
